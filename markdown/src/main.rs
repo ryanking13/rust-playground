@@ -1,7 +1,28 @@
+use std::fs::File;
+use std::io::{BufRead, BufReader};
+use std::path::Path;
+
 fn parse_markdown_file(filename: &str) {
     print_short_banner();
     println!("[ INFO ] Trying to parse {}...", filename);
 
+    let path = Path::new(filename);
+    let fp = File::open(&path).expect("[ ERROR ] Failed to open file!");
+    let mut _ptag: bool = false;
+    let mut _htag: bool = false;
+    let mut tokens: Vec<String> = Vec::new();
+    let reader = BufReader::new(fp);
+
+    for line in reader.lines() {
+        let contents = line.unwrap();
+        let mut first_char: Vec<char> = contents.chars().take(1).collect();
+        let mut output_line = String::new();
+
+        match first_char.pop() {
+            Some('#') => {}
+            _ => {}
+        }
+    }
 }
 
 fn print_short_banner() {
@@ -44,5 +65,3 @@ fn main() {
         }
     }
 }
-
-
