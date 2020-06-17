@@ -1,4 +1,6 @@
-fn parse_markdown_file() {
+fn parse_markdown_file(filename: &str) {
+    print_short_banner();
+    println!("[ INFO ] Trying to parse {}...", filename);
 
 }
 
@@ -12,7 +14,7 @@ fn print_long_banner() {
     written_by.push_str(env!("CARGO_PKG_AUTHORS"));
     let mut homepage = String::from("Homepage: ");
     homepage.push_str(env!("CARGO_PKG_HOMEPAGE"));
-    let mut usage = String::from("Usage: tinymd <somefile>.md");
+    let usage = String::from("Usage: tinymd <somefile>.md");
     println!("{}", written_by);
     println!("{}", homepage);
     println!("{}", usage);
@@ -32,7 +34,15 @@ fn usage() {
 }
 
 fn main() {
-    usage();
+    let args: Vec<String> = std::env::args().collect();
+
+    match args.len() {
+        2 => parse_markdown_file(&args[1]),
+        _ => {
+            println!("[ ERROR ] Invalid invocation");
+            usage();
+        }
+    }
 }
 
 
